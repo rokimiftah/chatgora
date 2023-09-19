@@ -1,0 +1,15 @@
+{% extends "chatgora/base.html" %}
+{% load static %}
+{% block content %}
+  <main>
+    <section id="room-name-wrapper">
+      <p>
+        Room Name: <span id="room-name"></span>
+      </p>
+    </section>
+    <section id="video-streams">
+    </section>
+  </main>
+  <script src="{% static "assets/AgoraRTC_N-4.18.2.js" %}"></script>
+  <script src="{% static "js/streams.js" %}"></script>
+{% endblock content %}
