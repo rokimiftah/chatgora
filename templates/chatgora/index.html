@@ -1,4 +1,22 @@
 {% extends "chatgora/base.html" %}
+{% load static %}
 {% block content %}
-  <h1>Chatgoraaaa</h1>
+  <main>
+    <section id="form-container">
+      <img id="logo" src="{% static "images/chat.png" %}" width="100px" height="100px" alt="chatgora">
+      <form id="form">
+        <div class="form-field">
+          <input type="submit" value="Join Stream">
+        </div>
+      </form>
+    </section>
+  </main>
+  <script>
+    let form = document.getElementById("form")
+    let handleSubmit = async (e) => {
+      e.preventDefault()
+      window.open("/room/", "_self")
+    }
+    form.addEventListener("submit", handleSubmit)
+  </script>
 {% endblock content %}
