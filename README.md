@@ -1,3 +1,3 @@
 ```
-https://chatgora.preview.rokimiftah.id
+https://chatgora.projects.rokimiftah.id
 ```
