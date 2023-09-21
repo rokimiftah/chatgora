@@ -48,6 +48,11 @@ body {
   background-color: rgba(75, 93, 172, 1);
   border: none;
   color: #fff;
+  cursor: pointer;
+}
+
+.form-field input[type="text"] {
+  text-transform: uppercase;
 }
 
 @media screen and (max-width: 450px) {
