@@ -9,6 +9,17 @@
     </section>
     <section id="video-streams">
     </section>
+    <section id="controls-wrapper">
+      <div class="icon-wrapper">
+        <img src="{% static "images/microphone.svg" %}" alt="microphone" id="mic-btn" class="control-icon" height="20px" width="20px">
+      </div>
+      <div class="icon-wrapper">
+        <img src="{% static "images/video.svg" %}" alt="camera" id="camera-btn" class="control-icon" height="20px" width="20px">
+      </div>
+      <div class="icon-wrapper">
+        <img src="{% static "images/leave.svg" %}" alt="leave" id="leave-btn" class="control-icon" height="20px" width="20px">
+      </div>
+    </section>
   </main>
   <script src="{% static "assets/AgoraRTC_N-4.18.2.js" %}"></script>
   <script src="{% static "js/streams.js" %}"></script>
