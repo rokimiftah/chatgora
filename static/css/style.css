@@ -1,3 +1,5 @@
+@import url("https://fonts.googleapis.com/css2?family=Lato:wght@100;300;400;700&display=swap");
+
 :root {
   --shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1),
     0 2px 4px -1px rgba(0, 0, 0, 0.06);
@@ -5,7 +7,7 @@
 
 body {
   background-color: rgba(232, 233, 239, 1);
-  font-family: "Roboto", sans-serif;
+  font-family: "Lato", sans-serif;
 }
 
 #logo {
@@ -25,8 +27,33 @@ body {
   transform: translate(-50%, -50%);
 }
 
-.input-room-name {
-  text-transform: uppercase;
+.form-field {
+  margin: 20px;
+}
+
+.form-field label {
+  font-size: 16px;
+  line-height: 1.7em;
+}
+
+.form-field input {
+  width: 100%;
+  border: 2px solid rgba(198, 202, 219, 1);
+  border-radius: 5px;
+  padding: 10px;
+  box-sizing: border-box;
+}
+
+.form-field input[type="submit"] {
+  background-color: rgba(75, 93, 172, 1);
+  border: none;
+  color: #fff;
+}
+
+@media screen and (max-width: 450px) {
+  #form-container {
+    width: 95%;
+  }
 }
 
 /* ROOM */
