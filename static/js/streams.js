@@ -82,7 +82,7 @@ let leaveAndRemoveLocalStream = async () => {
   window.open("/", "_self");
 };
 
-let toggleCamera = async () => {
+let toggleCamera = async (e) => {
   if (localTracks[1].muted) {
     await localTracks[1].setMuted(false);
     e.target.style.backgroundColor = "#fff";
