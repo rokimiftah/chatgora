@@ -66,4 +66,4 @@ def get_member(request):
 
     name = member.name
 
-    return JsonResponse({"name": member.name}, safe=False)
+    return JsonResponse({"name": name}, safe=False)
