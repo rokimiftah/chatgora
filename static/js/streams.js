@@ -3,32 +3,34 @@ const CHANNEL = sessionStorage.getItem("room");
 const TOKEN = sessionStorage.getItem("token");
 let UID = Number(sessionStorage.getItem("UID"));
 
+let NAME = sessionStorage.getItem("name");
+
 const client = AgoraRTC.createClient({ mode: "rtc", codec: "vp8" });
 
 let localTracks = [];
 let remoteUsers = {};
 
 let joinAndDisplayLocalStream = async () => {
-  document.getElementById("room-name").innerText = CHANNEL
+  document.getElementById("room-name").innerText = CHANNEL;
 
   client.on("user-published", handleUserJoined);
   client.on("user-left", handleUserLeft);
 
   try {
-
     UID = await client.join(APP_ID, CHANNEL, TOKEN, UID);
   } catch (error) {
-    console.error(error)
-    window.open("/", "_self")
+    console.error(error);
+    window.open("/", "_self");
   }
 
-
   localTracks = await AgoraRTC.createMicrophoneAndCameraTracks();
+
+  let member = await createMember();
 
   let player = `
             <div id="user-container-${UID}" class="video-container">
               <div class="username-wrapper">
-                <span class="user-name">My Name</span>
+                <span class="user-name">${member.name}</span>
               </div>
               <div id="user-${UID}" class="video-player"></div>
             </div>
@@ -54,10 +56,12 @@ let handleUserJoined = async (user, mediaType) => {
       player.remove();
     }
 
+    let member = await getMember(user);
+
     player = `
           <div id="user-container-${user.uid}" class="video-container">
             <div class="username-wrapper">
-              <span class="user-name">My Name</span>
+              <span class="user-name">${member.name}</span>
             </div>
             <div id="user-${user.uid}" class="video-player"></div>
           </div>
@@ -110,16 +114,32 @@ let toggleMic = async (e) => {
   }
 };
 
+let createMember = async () => {
+  let response = await fetch("/create-member/", {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify({ name: NAME, room_name: CHANNEL, UID: UID }),
+  });
+  let member = await response.json();
+  return member;
+};
+
+let getMember = async (user) => {
+  let response = await fetch(
+    `/get-member/?UID=${user.uid}&room_name=${CHANNEL}`
+  );
+  let member = await response.json();
+  return member;
+};
+
 joinAndDisplayLocalStream();
 
 document
   .getElementById("leave-btn")
   .addEventListener("click", leaveAndRemoveLocalStream);
 
-document
-  .getElementById("camera-btn")
-  .addEventListener("click", toggleCamera);
+document.getElementById("camera-btn").addEventListener("click", toggleCamera);
 
-document
-  .getElementById("mic-btn")
-  .addEventListener("click", toggleMic);
+document.getElementById("mic-btn").addEventListener("click", toggleMic);

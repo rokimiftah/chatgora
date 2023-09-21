@@ -1,3 +1,4 @@
+import json
 import os
 import random
 import time
@@ -5,7 +6,10 @@ import time
 from agora_token_builder import RtcTokenBuilder
 from django.http import JsonResponse
 from django.shortcuts import render
+from django.views.decorators.csrf import csrf_exempt
 from dotenv import load_dotenv
+
+from chatgora.models import RoomMember
 
 load_dotenv()
 
@@ -38,3 +42,28 @@ def index(request):
 
 def room(request):
     return render(request, "chatgora/room.html")
+
+
+@csrf_exempt
+def create_member(request):
+    data = json.loads(request.body)
+
+    member, created = RoomMember.objects.get_or_create(
+        name=data["name"], uid=data["UID"], room_name=data["room_name"]
+    )
+
+    return JsonResponse({"name": data["name"]}, safe=False)
+
+
+def get_member(request):
+    uid = request.GET.get("UID")
+    room_name = request.GET.get("room_name")
+
+    member = RoomMember.objects.get(
+        uid=uid,
+        room_name=room_name,
+    )
+
+    name = member.name
+
+    return JsonResponse({"name": member.name}, safe=False)
